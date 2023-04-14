@@ -11,16 +11,16 @@ const serverFlagsPlugin = fastifyPlugin(
       this.$error = new WeakRef<Error>(error);
     });
 
-    fastify.decorateRequest('getRequestError', function getRequestError(): Error {
-      return this.$error.deref()!;
+    fastify.decorateRequest('getRequestError', function getRequestError(): Error | undefined {
+      return this.$error.deref();
     });
 
     fastify.decorateRequest('setRequestPayload', function setRequestPayload(payload: unknown) {
       this.$payload = new WeakRef<{ payload: unknown }>({ payload });
     });
 
-    fastify.decorateRequest('getRequestPayload', function getRequestPayload(): unknown {
-      return this.$payload.deref()!.payload;
+    fastify.decorateRequest('getRequestPayload', function getRequestPayload(): unknown | undefined {
+      return this.$payload.deref()?.payload;
     });
 
     fastify.decorateRequest('setRequestLogging', function setRequestLogging() {
@@ -28,6 +28,11 @@ const serverFlagsPlugin = fastifyPlugin(
     });
 
     fastify.decorateRequest('getRequestLogging', function getRequestLogging(): boolean {
+      if (this.$isLogged == null) {
+        this.$isLogged = true;
+        return false;
+      }
+
       return this.$isLogged;
     });
 
