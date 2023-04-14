@@ -6,18 +6,22 @@ const responseTimePlugin = fastifyPlugin(
     fastify: FastifyInstance,
     options: {
       headerKey?: string;
+      includeTime?: () => boolean;
     },
-    done: (err?: Error) => void,
+    pluginDone: (err?: Error) => void,
   ) {
     const headerKey = options.headerKey ?? 'X-Response-Time';
 
-    fastify.addHook('onSend', (_req, reply, _data, hookDone) => {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      reply.header(headerKey, reply.getResponseTime());
-      hookDone();
+    fastify.addHook('onSend', (_req, reply, data, done) => {
+      if (options.includeTime?.() === true) {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        reply.header(headerKey, reply.getResponseTime());
+      }
+
+      done(null, data);
     });
 
-    done();
+    pluginDone();
   },
   {
     fastify: '4.x',
