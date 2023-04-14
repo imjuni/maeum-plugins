@@ -12,7 +12,7 @@ const serverFlagsPlugin = fastifyPlugin(
     });
 
     fastify.decorateRequest('getRequestError', function getRequestError(): Error | undefined {
-      return this.$error.deref();
+      return this.$error?.deref();
     });
 
     fastify.decorateRequest('setRequestPayload', function setRequestPayload(payload: unknown) {
@@ -20,7 +20,7 @@ const serverFlagsPlugin = fastifyPlugin(
     });
 
     fastify.decorateRequest('getRequestPayload', function getRequestPayload(): unknown | undefined {
-      return this.$payload.deref()?.payload;
+      return this.$payload?.deref()?.payload;
     });
 
     fastify.decorateRequest('setRequestLogging', function setRequestLogging() {

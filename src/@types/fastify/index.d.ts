@@ -3,9 +3,9 @@ import 'fastify';
 
 declare module 'fastify' {
   export interface FastifyRequest {
-    $isLogged: boolean | undefined;
-    $error: WeakRef<Error | undefined>;
-    $payload: WeakRef<{ payload: unknown | undefined }>;
+    $isLogged?: boolean | undefined;
+    $error?: WeakRef<Error | undefined>;
+    $payload?: WeakRef<{ payload: unknown | undefined }>;
 
     setRequestLogging: () => void;
     getRequestLogging: () => boolean;
