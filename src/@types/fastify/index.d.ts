@@ -10,9 +10,6 @@ declare module 'fastify' {
     setRequestLogging: () => void;
     getRequestLogging: () => boolean;
 
-    setRequestLogging: () => void;
-    getIsRequestLogging: () => boolean;
-
     setRequestError: (error: Error) => void;
     getRequestError: () => Error;
 
