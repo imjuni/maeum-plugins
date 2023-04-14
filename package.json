@@ -1,6 +1,6 @@
 {
   "name": "@maeum/plugins",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "Maeum server flag plugins",
   "engines": {
     "node": ">=14"
@@ -36,7 +36,7 @@
     ".": {
       "require": "./dist/cjs/index.cjs",
       "import": "./dist/esm/index.mjs",
-      "typings": "./dist/esm/index.d.mts"
+      "typings": "./dist/esm/index.d.ts"
     }
   },
   "files": [
