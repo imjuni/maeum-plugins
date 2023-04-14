@@ -1,6 +1,6 @@
 {
   "name": "@maeum/plugins",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Maeum server flag plugins",
   "engines": {
     "node": ">=14"
