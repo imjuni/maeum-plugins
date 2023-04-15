@@ -1,26 +1,45 @@
 import type { FastifyInstance } from 'fastify';
 import fastifyPlugin, { type PluginMetadata } from 'fastify-plugin';
 
-const serverFlagsPlugin = fastifyPlugin(
+declare module 'fastify' {
+  interface FastifyRequest {
+    $isLogged?: boolean | undefined;
+    $error?: Error | undefined;
+    $payload?: unknown | undefined;
+
+    setRequestLogging: () => void;
+    getRequestLogging: () => boolean;
+
+    setRequestError: (error: Error) => void;
+    getRequestError: () => Error | undefined;
+
+    setRequestPayload: (payload: unknown) => void;
+    getRequestPayload: () => unknown | undefined;
+  }
+}
+
+const requestFlagsPlugin = fastifyPlugin(
   function errorFlag(
     fastify: FastifyInstance,
     _options: PluginMetadata,
     done: (err?: Error) => void,
   ) {
     fastify.decorateRequest('setRequestError', function setRequestError(error: Error) {
-      this.$error = new WeakRef<Error>(error);
+      // this.$error = new WeakRef<Error>(error);
+      this.$error = error;
     });
 
     fastify.decorateRequest('getRequestError', function getRequestError(): Error | undefined {
-      return this.$error?.deref();
+      return this.$error;
     });
 
     fastify.decorateRequest('setRequestPayload', function setRequestPayload(payload: unknown) {
-      this.$payload = new WeakRef<{ payload: unknown }>({ payload });
+      this.$payload = payload;
     });
 
     fastify.decorateRequest('getRequestPayload', function getRequestPayload(): unknown | undefined {
-      return this.$payload?.deref()?.payload;
+      // return this.$payload?.deref()?.payload;
+      return this.$payload;
     });
 
     fastify.decorateRequest('setRequestLogging', function setRequestLogging() {
@@ -40,8 +59,8 @@ const serverFlagsPlugin = fastifyPlugin(
   },
   {
     fastify: '4.x',
-    name: 'maeum-server-flag',
+    name: 'maeum-request-flag',
   },
 );
 
-export default serverFlagsPlugin;
+export default requestFlagsPlugin;

@@ -34,7 +34,7 @@ export default [
       typescript({
         tsconfig: 'tsconfig.prod.json',
         compilerOptions: {
-          sourceMap: false,
+          sourceMap: true,
         },
       }),
       swc(),
