@@ -9,7 +9,7 @@
 [![ci](https://github.com/maeumjs/maeum-plugins/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/maeumjs/maeum-plugins/actions/workflows/ci.yml)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-Plugins of the a Maeum boilerplate. ResponseTime, Flag variable plugins includes.
+Plugins of the Maeum boilerplate. ResponseTime, Flag variable plugins includes.
 
 ## Response-Time Plugin
 
@@ -23,7 +23,8 @@ const server = fastify();
 
 server
   .register(responseTimePlugin, {
-    headerKey: 'X-Response-Time',
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server-Timing
+    headerKey: 'Server-Time',
     isExecute: () => config.server.runMode !== 'production',
   });
 ```
