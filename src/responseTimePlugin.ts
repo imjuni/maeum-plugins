@@ -1,6 +1,11 @@
 import type { FastifyInstance } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
 
+/**
+ * Add response time in header
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server-Timing
+ */
 const responseTimePlugin = fastifyPlugin(
   function responseTimeHandle(
     fastify: FastifyInstance,
@@ -10,12 +15,12 @@ const responseTimePlugin = fastifyPlugin(
     },
     pluginDone: (err?: Error) => void,
   ) {
-    const headerKey = options.headerKey ?? 'X-Response-Time';
+    const headerKey = options.headerKey ?? 'Server-Timing';
 
     fastify.addHook('onSend', (_req, reply, data, done) => {
       if (options.includeTime?.() === true) {
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        reply.header(headerKey, reply.getResponseTime());
+        reply.header(headerKey, `total;dur=${reply.getResponseTime()}`);
       }
 
       done(null, data);
