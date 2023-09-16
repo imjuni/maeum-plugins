@@ -1,6 +1,6 @@
 {
   // This is an alias to @tsconfig/node12: https://github.com/tsconfig/bases
-  "extends": "@tsconfig/node14/tsconfig.json",
+  "extends": "@tsconfig/node18/tsconfig.json",
 
   // Most ts-node options can be specified here using their programmatic names.
   "ts-node": {
@@ -18,7 +18,9 @@
   },
   "compilerOptions": {
     /* Basic Options */
-    "lib": ["es2020", "ES2021.WeakRef"],
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "lib": ["es2020"],
     "declaration": true /* Generates corresponding '.d.ts' file. */,
     "declarationMap": true /* Generates corresponding '.d.ts' file. */,
     "sourceMap": true /* Generates corresponding '.map' file. */,
@@ -38,14 +40,7 @@
     "noUncheckedIndexedAccess": true,
 
     /* Module Resolution Options */
-    "module": "Node16",
-    "moduleResolution": "Node16" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
-    "moduleDetection": "force",
     "baseUrl": "." /* Base directory to resolve non-absolute module names. */,
-    "paths": {
-      "#modules/*": ["src/modules/*"]
-    },
-    "rootDir": ".",
     "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
 
     /* Experimental Options */
